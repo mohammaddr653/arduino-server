@@ -14,6 +14,7 @@ app.post("/api", (req, res) => {
     array.push({
       bpm: info.bpm,
       spo2: info.spo2,
+      date: new Date().toLocaleString("fa-IR", { timeZone: "Asia/Tehran" }),
     });
   }
   console.log(req.body);

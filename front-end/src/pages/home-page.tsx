@@ -9,7 +9,7 @@ const HomePage = () => {
   const [info, setInfo] = useState<any>([]);
 
   async function load() {
-    const response = await call(axios.get(SERVER_URL + "/api"), true);
+    const response = await call(axios.get(SERVER_URL + "/api"), false);
     if (response?.data?.data) {
       setInfo([...response.data.data]);
     }
@@ -17,7 +17,7 @@ const HomePage = () => {
 
   useEffect(() => {
     load();
-    const interval = setInterval(load, 5000);
+    const interval = setInterval(load, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -44,9 +44,7 @@ const HomePage = () => {
                   {[...info].reverse().map((item: any, index: any) => {
                     return (
                       <tr className="">
-                        <td className="p-2">
-                          {new Date().toLocaleString("fa-IR")}
-                        </td>
+                        <td className="p-2">{item.date}</td>
                         <td className="p-2">{item.spo2}</td>
                         <td className="p-2">{item.bpm}</td>
                       </tr>
@@ -55,7 +53,7 @@ const HomePage = () => {
                 </tbody>
               </table>
             ) : (
-              <p>هیچ دیتایی وجود ندارد</p>
+              <p className="p-2">هیچ دیتایی وجود ندارد</p>
             )}
           </div>
         </div>
