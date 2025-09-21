@@ -1,10 +1,14 @@
 require("dotenv").config();
 
 const express = require("express");
+const path = require("path");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "client")));
+app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const array = [];
 
@@ -29,6 +33,14 @@ app.get("/api", (req, res) => {
     message: "اطلاعات بروزرسانی شد",
     data: array,
   });
+});
+
+const mode = process.env.NODE_ENV;
+
+app.get("*", (req, res) => {
+  mode === "production"
+    ? res.sendFile(path.join(__dirname, "client", "index.html"))
+    : res.send(`you are in ${mode} mode`);
 });
 
 const port = process.env.PORT || 3000;
