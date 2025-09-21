@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../../config";
 import callManager from "../hooks/callManager";
+import "../assets/css/homepage.css";
 
 const HomePage = () => {
   const { call, loading } = callManager();
@@ -16,14 +17,52 @@ const HomePage = () => {
 
   useEffect(() => {
     load();
+    const interval = setInterval(load, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-      <div className="bg-red-500">اطلاعات دریافتی</div>
-      {info?.map((item: any, index: any) => {
-        return <div key={index}>{item.spo2}</div>;
-      })}
+      <header></header>
+      <main className="">
+        <div className="homepage-container px-5 md:px-20 flex flex-col md:grid grid-cols-3 gap-5 pt-20">
+          <div className="p-3 text-size15 leading-loose md:sticky top-5 h-fit flex gap-5 rounded-md border border-neutral-300">
+            <p>اپراتور : رضا موسی زادگان</p>
+            <p>شماره دانشجویی : 3991731069</p>
+          </div>
+          <div className="w-full col-span-2 overflow-hidden overflow-x-scroll hide-scrollbar border border-neutral-300 rounded-md">
+            {info?.length ? (
+              <table className="w-full text-right">
+                <thead className="border-b border-neutral-300">
+                  <tr className="">
+                    <th className="p-2">تاریخ و زمان</th>
+                    <th className="p-2">spo2</th>
+                    <th className="p-2">bpm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...info].reverse().map((item: any, index: any) => {
+                    return (
+                      <tr className="">
+                        <td className="p-2">
+                          {new Date().toLocaleString("fa-IR")}
+                        </td>
+                        <td className="p-2">{item.spo2}</td>
+                        <td className="p-2">{item.bpm}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p>هیچ دیتایی وجود ندارد</p>
+            )}
+          </div>
+        </div>
+      </main>
+      <footer className="mt-auto text-neutral-600 text-size14 p-5 flex justify-center md:justify-start">
+        طراحی سرور توسط محمد امین درخشنده | شماره تماس : 09377372231
+      </footer>
     </>
   );
 };

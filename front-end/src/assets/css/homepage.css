@@ -1,0 +1,11 @@
+table tr:nth-child(even) {
+  background-color: #eeeeee; /* رنگ سطرهای زوج */
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE و Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome، Safari و Opera */
+}
