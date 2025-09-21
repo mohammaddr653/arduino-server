@@ -16,9 +16,6 @@
   html{
     scroll-behavior: smooth;
   }
-  body {
-    background-color: red;
-  }
   div#root {
     background-color: white;
     max-width: 1616px;
